@@ -24,7 +24,7 @@ public class Complexa extends Ocorrencia {
 	 * @param tamanho its the size of the file
 	 */
 	
-	//constructor complexa
+	//constructor complexa!
 	public Complexa(String codigo, String titulo, String descricao, String prioridade, String estado,
 			String localizacao, String departamento, int prazo, String link, int tamanho) {
 		
