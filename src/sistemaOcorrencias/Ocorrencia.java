@@ -27,6 +27,8 @@ public class Ocorrencia {
 	 * @param departamento the department that will be handling the issue
 	 * @param prazo is the estimated date for this problem to be solved	
 	 */
+	
+	
 	public Ocorrencia(String codigo, String titulo, String descricao, String prioridade, String estado,
 			String localizacao, String departamento, int prazo) {
 		
