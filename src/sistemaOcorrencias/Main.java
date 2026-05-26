@@ -6,9 +6,6 @@ package sistemaOcorrencias;
 
 import java.util.Scanner;
 
-import projeto.Gestor;
-import projeto.Ocorrencia;
-
 public class Main {
 
 	public static void interfaceSistema() {
