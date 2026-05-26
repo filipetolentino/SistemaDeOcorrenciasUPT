@@ -14,6 +14,8 @@ package sistemaOcorrencias;
 
 import java.util.ArrayList;
 
+import projeto.Ocorrencia;
+
 public class Gestor {
 
 	private ArrayList<Ocorrencia> ocorrencias;
@@ -154,5 +156,21 @@ public class Gestor {
 		}
 	}
 	
+	public Ocorrencia procurarOcorrencia(String codigo) {
+		for(Ocorrencia i : ocorrencias) {
+			if(i.getCodigo().equals(codigo)) {
+				return i;
+			}
+		}
+		return null;
+	}
+	
+	public void visualizarOcorrencias(String estado) {
+		for(Ocorrencia o : ocorrencias) {
+			if(o.getEstado().equalsIgnoreCase(estado)) {
+				System.out.println(o);
+			}
+		}
+	}
 	
 }
