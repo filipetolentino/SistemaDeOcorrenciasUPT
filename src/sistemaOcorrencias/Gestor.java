@@ -101,7 +101,6 @@ public class Gestor {
 	 */
 
 	public Ocorrencia newOcorrencia(String titulo, String descricao, String prioridade,
-//>>>>>>> branch 'master' of git@github.com:alejandrosilva-ec/SistemaDeOcorrenciasUPT.git
 			String localizacao, String departamento) {
  
 		String codigo = gerarCodigo();
@@ -215,5 +214,79 @@ public class Gestor {
 		}
 	}
 	
-}
+	/**
+	 * Lista todas as ocorrências pendentes, ou seja, com estado "Aberta" ou "Em Atraso".
+	 *
+	 * Antes de listar, percorre todas as ocorrências "Abertas" e verifica se a
+	 * dataLimite já foi ultrapassada — se sim, atualiza o estado para "Em Atraso"
+	 * automaticamente, evitando que incidentes fiquem esquecidos.
+	 *
+	 * A listagem é apresentada em dois grupos separados:
+	 *   1. Em Atraso  — mostradas primeiro, por serem mais urgentes
+	 *   2. Abertas    — dentro do prazo, mas ainda por resolver
+	 *
+	 * Se não existirem ocorrências pendentes, informa o utilizador.
+	 *
+	 * @author Filipe Tolentino
+	 */
 	
+	//definir ocorrencias atrasadas
+	public void listarPendentes() {
+		java.time.LocalDate hoje = java.time.LocalDate.now();
+		for (Ocorrencia o : ocorrencias) {
+			if (o.getEstado().equalsIgnoreCase("Aberta") && o.getDataLimite().isBefore(hoje)) {
+			o.setEstado("Em atraso.");
+			System.out.println("[AVISO] Ocorrência " + o.getCodigo() + " passou para \"Em Atraso\" (prazo: " + o.getDataLimite() + ").");
+			}
+		}
+		
+		java.util.List<Ocorrencia> emAtraso = new java.util.ArrayList<>();
+		java.util.List<Ocorrencia> abertas = new java.util.ArrayList<>();
+		
+		//adicionar e separar na lista de abertas e fechadas
+		for (Ocorrencia o : ocorrencias) {
+			if (o.getEstado().equalsIgnoreCase("Em Atraso")) {
+				emAtraso.add(o);
+			} else if (o.getEstado().equalsIgnoreCase("Aberta")) {
+				abertas.add(o);
+			}
+		}
+
+		//verificar se há ocorrencias pendentes
+		if (emAtraso.isEmpty() && abertas.isEmpty()) {
+			System.out.println("\n[INFO] Não existem ocorrências pendentes. Tudo resolvido!");
+			return;
+		}
+		
+		System.out.println("\n==========================================");
+		System.out.println("       OCORRÊNCIAS PENDENTES              ");
+		System.out.println("==========================================");
+		
+		//Mostrar Em Atraso primeiro (mais urgentes)
+		if (!emAtraso.isEmpty()) {
+			System.out.println("\n⚠  EM ATRASO (" + emAtraso.size() + ")");
+			System.out.println("------------------------------------------");
+			for (Ocorrencia o : emAtraso) {
+					o.printOcorrencia();
+			System.out.println("------------------------------------------");
+			}
+		   }
+
+		//Mostrar Abertas
+		if (!abertas.isEmpty()) {
+			System.out.println("\n✔  ABERTAS (" + abertas.size() + ")");
+			System.out.println("------------------------------------------");
+			for (Ocorrencia o : abertas) {
+				o.printOcorrencia();
+			System.out.println("------------------------------------------");
+			}
+		 }
+		
+		//numero total de pendencias
+		System.out.println("\nTotal pendentes: " + (emAtraso.size() + abertas.size())
+				+ "  |  Em Atraso: " + emAtraso.size()
+				+ "  |  Abertas: " + abertas.size());
+		System.out.println("==========================================\n");
+	  }
+
+	}

@@ -28,7 +28,7 @@ public class Main {
 			System.out.println("\n ---Menu---");
 			System.out.println("1 - Registrar ocorrência");
 			System.out.println("2 - Procurar ocorrência");
-			System.out.println("3 - Visualizar por estado");
+			System.out.println("3 - Listar pendentes (Abertas + Em Atraso)");
 			
 			opcao=scanner.nextInt();
 			scanner.nextLine();
@@ -147,17 +147,15 @@ public class Main {
 				
 			case 3:
 				
-				System.out.print("Estado:");
-				String est = scanner.nextLine();
-				
-				gestor.visualizarOcorrencias(est);
+				ocorrencias.listarPendentes();
 				break;
 				
 				default:
 					System.out.print("Opção inválida.");
 					
 					}
-			
+				
+					
 				}while(opcao !=0);
 			}
 		
